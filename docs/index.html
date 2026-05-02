@@ -94,9 +94,80 @@
       font-weight: 600;
     }
 
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-copy p {
+      max-width: 680px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .feature-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .feature {
+      background: linear-gradient(180deg, #f8fafc 0%, #eff6ff 100%);
+      border: 1px solid rgba(37, 99, 235, 0.14);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 14px 32px rgba(16, 42, 67, 0.08);
+    }
+
+    .feature h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      color: #102a43;
+    }
+
+    .feature p {
+      margin: 0;
+      color: #475569;
+      line-height: 1.7;
+      font-size: 0.96rem;
+    }
+
     .grid {
       display: grid;
       gap: 20px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 1px solid #dbeafe;
+      box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
+      padding: 24px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .card {
@@ -202,14 +273,37 @@
   <div class="container">
     <section class="hero">
       <span class="label">Sessiz Alarm Sistemi</span>
-      <h1>Sessiz Alarm Sistemi</h1>
-      <p>Bu sayfa, işitme sıkıntısı olan kişiler için sesleri daha kolay fark etmeye yarayan bir projenin ne olduğunu anlatıyor. Anlaşılır, samimi ve doğal bir dil kullandık.</p>
-      <p class="ai-note">Bu proje, yapay zeka destekli ses tanıma fikriyle tasarlandı. Sistem akıllı bir şekilde sesleri ayırt etmeye çalışıyor.</p>
-      <p class="slogan">Sesleri gör, hayatı kaçırma.</p>
-      <div class="hero-image">
-        <img src="projefoto.png" alt="Sessiz Alarm Sistemi görseli" />
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <h1>Sessiz Alarm Sistemi</h1>
+          <p>Bu sayfa, işitme sıkıntısı olan kişiler için sesleri daha kolay fark etmeye yarayan bir projenin ne olduğunu anlatıyor. Anlaşılır, samimi ve doğal bir dil kullandık.</p>
+          <p class="ai-note">Bu proje, yapay zeka destekli ses tanıma fikriyle tasarlandı. Sistem akıllı bir şekilde sesleri ayırt etmeye çalışıyor.</p>
+          <p class="slogan">Sesleri gör, hayatı kaçırma.</p>
+          <div class="hero-meta">
+            <span>Canlı ses algılama</span>
+            <span>Renkli görsel uyarılar</span>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="projefoto.png" alt="Sessiz Alarm Sistemi görseli" />
+        </div>
       </div>
       <p class="image-caption">Projeye ait örnek alan ve ses uyarı sistemi gösterimi.</p>
+    </section>
+
+    <section class="feature-strip">
+      <div class="feature">
+        <h3>Günlük Hayatta Güven</h3>
+        <p>Profesyonel olmayan kullanıcılar için bile anlaşılır şekilde çalışır; sesleri görsel uyarılarla bildirir.</p>
+      </div>
+      <div class="feature">
+        <h3>Akıllı Seçenekler</h3>
+        <p>Kapı zili, alarm, bebek ağlaması gibi yaygın sesleri ayırt etmek için tasarlandı.</p>
+      </div>
+      <div class="feature">
+        <h3>Uyarlanabilir Tasarım</h3>
+        <p>Cihaz, evde ya da ofiste kolayca kullanılabilir; gece ve gündüz için farklı modlar planlanabilir.</p>
+      </div>
     </section>
 
     <div class="grid">
@@ -288,9 +382,29 @@
           <li>Gürültülü ortamda çalışan kişiler</li>
         </ul>
       </section>
+
+      <section class="card">
+        <h2><span class="icon">🧠</span> Teknoloji</h2>
+        <p>Projede yapay zeka ses sınıflandırması, hızlı algoritmalar ve basit donanım kullanılarak daha akıllı ve erişilebilir bir sistem hedefleniyor.</p>
+        <ul>
+          <li>Basit mikrofon sensörleri</li>
+          <li>Ses sınıflandırma yazılımı</li>
+          <li>Renkli LED bildirimleri</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2><span class="icon">📌</span> Projeyi Büyütme</h2>
+        <p>Bu projeyi daha büyük bir platforma taşımak için adım adım bir yol hazır. Prototip, mobil entegrasyon ve kullanıcı testi aşamalarıyla genişleyebilir.</p>
+        <ul>
+          <li>Prototip kurulum</li>
+          <li>Mobil uygulama ekleme</li>
+          <li>Kullanıcı geri bildirimi toplama</li>
+        </ul>
+      </section>
     </div>
 
-    <footer class="footer">Arda Çakır</footer>
+    <footer class="footer">Arda Çakır · Sesli dünyayı daha görünür kılmak için tasarlandı.</footer>
   </div>
 </body>
 </html>

@@ -4,208 +4,447 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sessiz Alarm Sistemi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(180deg, #e7f2ff 0%, #f8f9fb 45%, #f6f0ff 100%);
-      color: #102a43;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #ec4899;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+      --border-radius: 12px;
+      --border-radius-lg: 16px;
+      --border-radius-xl: 20px;
+    }
+
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 24px;
+      color: var(--gray-700);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
     .container {
-      width: 100%;
-      max-width: 940px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
     }
 
+    /* Loading Animation */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeOut 0.5s ease-in-out 2s forwards;
+    }
+
+    .loading::after {
+      content: '';
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-left: 4px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    /* Hero Section */
     .hero {
-      background: #eef8ff;
-      border: 1px solid rgba(37, 99, 235, 0.14);
-      border-radius: 28px;
-      box-shadow: 0 20px 50px rgba(16, 42, 67, 0.12);
-      padding: 36px 34px;
-      margin-bottom: 24px;
-      display: grid;
-      gap: 16px;
-    }
-
-    .hero .label {
-      font-size: 0.95rem;
-      color: #2563eb;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    .hero-image {
-      width: 100%;
-      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: var(--border-radius-xl);
+      padding: 3rem 2rem;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow-2xl);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
       overflow: hidden;
-      border: 1px solid rgba(37, 99, 235, 0.18);
-      box-shadow: 0 16px 35px rgba(16, 42, 67, 0.12);
     }
 
-    .hero-image img {
-      display: block;
-      width: 100%;
-      height: auto;
-      object-fit: cover;
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
     }
 
-    .image-caption {
-      margin: 8px 0 0;
-      font-size: 0.95rem;
-      color: #475569;
+    .hero-label {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
     }
 
     .hero h1 {
-      font-size: 2.7rem;
-      margin: 0;
-      color: #102a43;
-      line-height: 1.05;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gray-800), var(--gray-600));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
     }
 
     .hero p {
-      margin: 0;
-      color: #475569;
-      font-size: 1rem;
-      line-height: 1.75;
-      max-width: 680px;
+      font-size: 1.125rem;
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+      max-width: 600px;
     }
 
     .hero .ai-note {
-      font-size: 0.98rem;
-      color: #1d4ed8;
-      border-left: 4px solid #93c5fd;
-      padding-left: 12px;
-      margin-top: 8px;
-      max-width: 680px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: var(--border-radius);
+      padding: 1rem;
+      margin: 1.5rem 0;
+      border-left: 4px solid var(--primary);
     }
 
     .hero .slogan {
-      color: #334155;
+      font-size: 1.25rem;
       font-weight: 600;
+      color: var(--primary);
+      margin: 1rem 0;
     }
 
+    .hero-image {
+      margin: 2rem 0;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hero-image:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-2xl);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-image:hover img {
+      transform: scale(1.02);
+    }
+
+    .image-caption {
+      text-align: center;
+      color: var(--gray-500);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* Grid Layout */
     .grid {
       display: grid;
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
     }
 
+    /* Cards */
     .card {
-      background: #ffffff;
-      border-radius: 24px;
-      border: 1px solid #dbeafe;
-      box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
-      padding: 24px;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
     }
 
     .card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(37, 99, 235, 0.22);
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-2xl);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
     }
 
     .card h2 {
-      margin: 0 0 14px;
-      font-size: 1.28rem;
-      color: #102a43;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 0.75rem;
     }
 
-    .icon {
-      width: 36px;
-      height: 36px;
+    .card-icon {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      background: #f0f9ff;
-      color: #2563eb;
-      font-size: 1.1rem;
-      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.12);
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
     }
 
-    .card p,
-    .card ul,
-    .footer {
-      margin: 0;
-      color: #475569;
-      line-height: 1.75;
-      font-size: 1rem;
+    .card p {
+      color: var(--gray-600);
+      margin-bottom: 1rem;
+      line-height: 1.7;
     }
 
     .card ul {
-      margin-top: 10px;
-      padding-left: 18px;
+      list-style: none;
+      padding: 0;
     }
 
     .card li {
-      margin-bottom: 10px;
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--gray-600);
+      border-bottom: 1px solid var(--gray-100);
     }
 
+    .card li:last-child {
+      border-bottom: none;
+    }
+
+    .card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    /* Steps */
     .steps {
-      margin-top: 10px;
-      padding-left: 0;
       list-style: none;
+      padding: 0;
     }
 
     .steps li {
       display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      margin-bottom: 12px;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: var(--gray-50);
+      border-radius: var(--border-radius);
+      border-left: 4px solid var(--primary);
+      transition: all 0.2s ease;
+    }
+
+    .steps li:hover {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05));
+      transform: translateX(5px);
     }
 
     .step-number {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: #dbeafe;
-      color: #1d4ed8;
-      display: inline-flex;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
+      font-size: 0.875rem;
       flex-shrink: 0;
+      box-shadow: var(--shadow);
     }
 
+    /* Footer */
     .footer {
       text-align: center;
-      padding: 18px 0 8px;
-      color: #64748b;
+      padding: 2rem 0;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.875rem;
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: var(--border-radius-xl);
+      margin-top: 3rem;
     }
 
-    @media (max-width: 760px) {
-      .hero h1 { font-size: 2.4rem; }
-      .grid { gap: 18px; }
+    /* Animations */
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    @media (max-width: 520px) {
-      body { padding: 16px; }
-      .hero, .card { padding: 20px; }
-      .hero h1 { font-size: 2rem; }
-      .card h2 { font-size: 1.15rem; }
+    .hero, .card {
+      animation: slideInUp 0.6s ease-out;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+    .card:nth-child(4) { animation-delay: 0.4s; }
+    .card:nth-child(5) { animation-delay: 0.5s; }
+    .card:nth-child(6) { animation-delay: 0.6s; }
+    .card:nth-child(7) { animation-delay: 0.7s; }
+    .card:nth-child(8) { animation-delay: 0.8s; }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .hero {
+        padding: 2rem 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .card {
+        padding: 1.5rem;
+      }
+
+      .card h2 {
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero {
+        padding: 1.5rem 1rem;
+      }
+
+      .card {
+        padding: 1rem;
+      }
+
+      .card h2 {
+        font-size: 1.125rem;
+      }
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
     }
   </style>
 </head>
 <body>
+  <div class="loading"></div>
+
   <div class="container">
     <section class="hero">
-      <span class="label">Sessiz Alarm Sistemi</span>
+      <span class="hero-label">🎯 Sessiz Alarm Sistemi</span>
       <h1>Sessiz Alarm Sistemi</h1>
       <p>Bu sayfa, işitme sıkıntısı olan kişiler için sesleri daha kolay fark etmeye yarayan bir projenin ne olduğunu anlatıyor. Anlaşılır, samimi ve doğal bir dil kullandık.</p>
-      <p class="ai-note">Bu proje, yapay zeka destekli ses tanıma fikriyle tasarlandı. Sistem akıllı bir şekilde sesleri ayırt etmeye çalışıyor.</p>
-      <p class="slogan">Sesleri gör, hayatı kaçırma.</p>
+      <div class="ai-note">
+        <strong>🤖 Yapay Zeka Destekli:</strong> Bu proje, yapay zeka destekli ses tanıma fikriyle tasarlandı. Sistem akıllı bir şekilde sesleri ayırt etmeye çalışıyor.
+      </div>
+      <p class="slogan">✨ Sesleri gör, hayatı kaçırma.</p>
       <div class="hero-image">
         <img src="projefoto.png" alt="Sessiz Alarm Sistemi görseli" />
       </div>
@@ -214,7 +453,7 @@
 
     <div class="grid">
       <section class="card">
-        <h2><span class="icon">❗</span> Sorun</h2>
+        <h2><span class="card-icon">❗</span> Sorun</h2>
         <p>Günlük hayatta sesleri kaçırmak normal ama zor oluyor. Kapı çalınca fark edememek, alarmı duymamak ya da birinin seslenmesini kaçırmak herkes için sıkıntı.</p>
         <ul>
           <li>Kapı çalınca fark edememek</li>
@@ -224,7 +463,7 @@
       </section>
 
       <section class="card">
-        <h2><span class="icon">💡</span> Çözüm</h2>
+        <h2><span class="card-icon">💡</span> Çözüm</h2>
         <p>Bu proje, yapay zeka destekli ses tanıma fikriyle çalışıyor. Sesleri algılayıp ne tür ses olduklarını tahmin ediyor ve kullanıcıyı görsel, titreşimli şekilde uyarıyor.</p>
         <ul>
           <li>Sistem sesleri algılar</li>
@@ -234,7 +473,7 @@
       </section>
 
       <section class="card">
-        <h2><span class="icon">⚙️</span> Nasıl Çalışır</h2>
+        <h2><span class="card-icon">⚙️</span> Nasıl Çalışır</h2>
         <ul class="steps">
           <li><span class="step-number">1</span> Mikrofon sesi algılar</li>
           <li><span class="step-number">2</span>Sistem sesi analiz eder</li>
@@ -244,7 +483,7 @@
       </section>
 
       <section class="card">
-        <h2><span class="icon">✨</span> Özellikler</h2>
+        <h2><span class="card-icon">✨</span> Özellikler</h2>
         <ul>
           <li>Kapı zilini algılar</li>
           <li>Alarm sesini fark eder</li>
@@ -255,12 +494,12 @@
       </section>
 
       <section class="card">
-        <h2><span class="icon">👀</span>Kullanım Örneği</h2>
+        <h2><span class="card-icon">👀</span>Kullanım Örneği</h2>
         <p>Evdesin ve kapı çalıyor ama duymuyorsun. Sistem bu sesi fark eder, ışık ya da titreşimle sana bildirir. Böylece kapıyı kaçırmaz ve daha rahat bir gün geçirirsin.</p>
       </section>
 
       <section class="card">
-        <h2><span class="icon">🎯</span> Neden Önemli?</h2>
+        <h2><span class="card-icon">🎯</span> Neden Önemli?</h2>
         <p>Bu proje, günlük hayatı kolaylaştırmak için tasarlandı. Sesleri kaçırmamak, daha güvenli hissetmek ve daha bağımsız yaşamak için faydalı olabilir.</p>
         <ul>
           <li>Günlük hayatı kolaylaştırır</li>
@@ -270,7 +509,7 @@
       </section>
 
       <section class="card">
-        <h2><span class="icon">🚀</span> Geliştirilebilir Yönler</h2>
+        <h2><span class="card-icon">🚀</span> Geliştirilebilir Yönler</h2>
         <ul>
           <li>Gerçek yapay zeka modeli ile daha akıllı hale gelebilir</li>
           <li>Telefon uygulamasına dönüştürülebilir</li>
@@ -281,7 +520,7 @@
       </section>
 
       <section class="card">
-        <h2><span class="icon">🎯</span> Hedef Kitle</h2>
+        <h2><span class="card-icon">🎯</span> Hedef Kitle</h2>
         <ul>
           <li>İşitme engelli bireyler</li>
           <li>Yaşlı insanlar</li>
@@ -290,7 +529,41 @@
       </section>
     </div>
 
-    <footer class="footer">Arda Çakır</footer>
+    <footer class="footer">
+      <p>💻 Developed by <strong>Arda Çakır</strong></p>
+    </footer>
   </div>
+
+  <script>
+    // Loading animation
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.querySelector('.loading').style.display = 'none';
+      }, 2000);
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards
+    document.querySelectorAll('.card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+  </script>
 </body>
 </html>

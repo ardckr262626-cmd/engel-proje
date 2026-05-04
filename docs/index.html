@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sessiz Alarm Sistemi</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
+      /* Light Mode Colors */
       --primary: #6366f1;
       --primary-dark: #4f46e5;
       --secondary: #ec4899;
@@ -33,6 +34,34 @@
       --border-radius: 12px;
       --border-radius-lg: 16px;
       --border-radius-xl: 20px;
+      
+      /* Light Mode Theme */
+      --bg-primary: #ffffff;
+      --bg-secondary: rgba(255, 255, 255, 0.95);
+      --bg-tertiary: #f8fafc;
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-tertiary: #64748b;
+      --border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --primary: #7c3aed;
+      --primary-dark: #6d28d9;
+      --secondary: #ec4899;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      
+      /* Dark Mode Theme */
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-tertiary: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.1);
     }
 
     * {
@@ -43,11 +72,12 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: var(--bg-primary);
       min-height: 100vh;
-      color: var(--gray-700);
+      color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .container {
@@ -71,6 +101,36 @@
       animation: fadeOut 0.5s ease-in-out 2s forwards;
     }
 
+    /* Theme Toggle Button */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .theme-toggle:active {
+      transform: scale(0.95);
+    }
+
     .loading::after {
       content: '';
       width: 40px;
@@ -92,15 +152,16 @@
 
     /* Hero Section */
     .hero {
-      background: rgba(255, 255, 255, 0.95);
+      background: var(--bg-secondary);
       backdrop-filter: blur(20px);
       border-radius: var(--border-radius-xl);
       padding: 3rem 2rem;
       margin-bottom: 3rem;
       box-shadow: var(--shadow-2xl);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid var(--border-color);
       position: relative;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
 
     .hero::before {
@@ -129,29 +190,32 @@
 
     .hero h1 {
       font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--gray-800), var(--gray-600));
+      font-weight: 800;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       margin-bottom: 1.5rem;
       line-height: 1.1;
+      letter-spacing: -0.02em;
     }
 
     .hero p {
       font-size: 1.125rem;
-      color: var(--gray-600);
+      color: var(--text-secondary);
       margin-bottom: 1rem;
       max-width: 600px;
     }
 
     .hero .ai-note {
       background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
-      border: 1px solid rgba(99, 102, 241, 0.2);
+      border: 1px solid var(--primary);
       border-radius: var(--border-radius);
       padding: 1rem;
       margin: 1.5rem 0;
       border-left: 4px solid var(--primary);
+      color: var(--text-secondary);
     }
 
     .hero .slogan {
@@ -204,12 +268,12 @@
 
     /* Cards */
     .card {
-      background: rgba(255, 255, 255, 0.95);
+      background: var(--bg-secondary);
       backdrop-filter: blur(20px);
       border-radius: var(--border-radius-lg);
       padding: 2rem;
       box-shadow: var(--shadow-lg);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid var(--border-color);
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
@@ -230,7 +294,7 @@
     .card:hover {
       transform: translateY(-8px);
       box-shadow: var(--shadow-2xl);
-      border-color: rgba(99, 102, 241, 0.3);
+      border-color: var(--primary);
     }
 
     .card:hover::before {
@@ -239,8 +303,9 @@
 
     .card h2 {
       font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--gray-800);
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-primary);
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
@@ -262,7 +327,7 @@
     }
 
     .card p {
-      color: var(--gray-600);
+      color: var(--text-secondary);
       margin-bottom: 1rem;
       line-height: 1.7;
     }
@@ -276,8 +341,8 @@
       padding: 0.5rem 0;
       padding-left: 1.5rem;
       position: relative;
-      color: var(--gray-600);
-      border-bottom: 1px solid var(--gray-100);
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-color);
     }
 
     .card li:last-child {
@@ -304,7 +369,7 @@
       gap: 1rem;
       margin-bottom: 1rem;
       padding: 1rem;
-      background: var(--gray-50);
+      background: var(--bg-tertiary);
       border-radius: var(--border-radius);
       border-left: 4px solid var(--primary);
       transition: all 0.2s ease;
@@ -334,9 +399,9 @@
     .footer {
       text-align: center;
       padding: 2rem 0;
-      color: rgba(255, 255, 255, 0.8);
+      color: var(--text-secondary);
       font-size: 0.875rem;
-      background: rgba(0, 0, 0, 0.1);
+      background: var(--bg-secondary);
       backdrop-filter: blur(10px);
       border-radius: var(--border-radius-xl);
       margin-top: 3rem;
@@ -420,7 +485,7 @@
     }
 
     ::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--bg-tertiary);
     }
 
     ::-webkit-scrollbar-thumb {
@@ -434,6 +499,7 @@
   </style>
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">🌙</button>
   <div class="loading"></div>
 
   <div class="container">
@@ -543,6 +609,27 @@
   </div>
 
   <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+    
+    // Check for saved theme preference or default to 'light'
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    htmlElement.setAttribute('data-theme', currentTheme);
+    updateThemeToggle(currentTheme);
+    
+    // Theme toggle click handler
+    themeToggle.addEventListener('click', function() {
+      const newTheme = htmlElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      htmlElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeToggle(newTheme);
+    });
+    
+    function updateThemeToggle(theme) {
+      themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+    }
+
     // Loading animation
     window.addEventListener('load', function() {
       setTimeout(function() {
